@@ -3,7 +3,9 @@ require("dotenv").config()
 const multer = require("multer")
 const path = require("path")
 const File = require("../models/file")
-const { v4: uuid4 } = require("uuid")
+const crypto = require("crypto")
+
+// const { v4: uuid4 } = require("uuid")
 
 // Define multer disk storage
 const storage = multer.diskStorage({
@@ -38,7 +40,7 @@ router.post("/", async (req, res) => {
       // Create new file object and store in DB
       const file = new File({
         filename: req.file.filename,
-        uuid: uuid4(),
+        uuid: crypto.randomUUID(),
         path: req.file.path,
         size: req.file.size
       })
